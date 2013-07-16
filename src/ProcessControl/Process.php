@@ -3,6 +3,7 @@
 namespace ProcessControl;
 
 use PhpCollection\Map;
+use ProcessControl\Exception\MissingChildException;
 
 /**
  * Class Process
@@ -84,6 +85,24 @@ class Process
     }
 
     /**
+     * Get Child By ID
+     *
+     * @param int $processId
+     *
+     * @return Process
+     *
+     * @throws MissingChildException
+     */
+    public function getChildById($processId)
+    {
+        if (false === $this->hasChildByProcessId($processId)) {
+            throw new MissingChildException('The child process does not exist');
+        }
+
+        return $this->children->get($processId)->get();
+    }
+
+    /**
      * Has Child By Process Id
      *
      * @param int $processId Process ID
@@ -93,5 +112,25 @@ class Process
     public function hasChildByProcessId($processId)
     {
         return $this->children->containsKey($processId);
+    }
+
+    /**
+     * Remove Child Process
+     *
+     * @param Process $process
+     *
+     * @return Process
+     *
+     * @throws MissingChildException
+     */
+    public function removeChild(Process $process)
+    {
+        if (false === $this->hasChildByProcessId($process->getId())) {
+            throw new MissingChildException('The child process does not exist');
+        }
+
+        $this->children->remove($process->getId());
+
+        return $this;
     }
 }

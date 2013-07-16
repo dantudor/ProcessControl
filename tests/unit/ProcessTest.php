@@ -43,4 +43,42 @@ class ProcessTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($master, $process->getParent());
     }
+
+    /**
+     * @expectedException \ProcessControl\Exception\MissingChildException
+     */
+    public function testGetChildByIdWithMissingChildThrowsException()
+    {
+        $process = new Process(1234);
+        $process->getChildById(5678);
+    }
+
+    public function testGetChildWithIdReturnsChild()
+    {
+        $process = new Process(1234);
+        $childProcess = new Process(5678, $process);
+        $process->addChild($childProcess);
+
+        $this->assertSame($childProcess, $process->getChildById($childProcess->getId()));
+    }
+
+    /**
+     * @expectedException \ProcessControl\Exception\MissingChildException
+     */
+    public function testRemoveMissingChildThrowsException()
+    {
+        $process = new Process(1234);
+        $childProcess = new Process(5678, $process);
+
+        $process->removeChild($childProcess);
+    }
+
+    public function testRemoveChildSuccess()
+    {
+        $process = new Process(1234);
+        $childProcess = new Process(5678, $process);
+        $process->addChild($childProcess);
+
+        $process->removeChild($childProcess);
+    }
 }

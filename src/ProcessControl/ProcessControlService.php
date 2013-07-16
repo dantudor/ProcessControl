@@ -83,4 +83,22 @@ class ProcessControlService
 
         return $this;
     }
+
+    /**
+     * Terminate Process
+     *
+     * @param Process $process Child Process
+     * @param int     $signal  Signal
+     *
+     * @return ProcessControlService
+     *
+     * @throws TerminationFailureException
+     */
+    public function terminateProcess(Process $process, $signal = SIGKILL)
+    {
+        $this->posix->kill($process->getId(), $signal);
+        $this->getMaster()->removeChild($process);
+
+        return $this;
+    }
 }

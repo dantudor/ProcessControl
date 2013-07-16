@@ -97,8 +97,23 @@ class ProcessControlServiceTest extends PHPUnit_Framework_TestCase
 
         $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
         $processService->parallel(function(){ });
+    }
 
+    public function testTerminateProcess()
+    {
+        $masterPid = 1234;
+        $childPid = 5678;
 
+        $this->mockPosix->shouldReceive('getpid')->andReturn($masterPid, $childPid);
+        $this->mockPosix->shouldReceive('kill')->with($childPid, 9);
+        $this->mockPcntl->shouldReceive('fork')->andReturn($childPid);
+
+        $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
+        $processService->parallel(function(){sleep(10);});
+
+        $childProcess = $processService->getMaster()->getChildById($childPid);
+
+        $this->assertSame($processService, $processService->terminateProcess($childProcess));
     }
 }
 
