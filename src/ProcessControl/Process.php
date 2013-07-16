@@ -133,4 +133,14 @@ class Process
 
         return $this;
     }
+
+    /**
+     * Get Child Count
+     *
+     * @return int
+     */
+    public function getChildCount()
+    {
+        return $this->children->count();
+    }
 }

@@ -77,8 +77,18 @@ class ProcessTest extends PHPUnit_Framework_TestCase
     {
         $process = new Process(1234);
         $childProcess = new Process(5678, $process);
-        $process->addChild($childProcess);
 
+        $process->addChild($childProcess);
+        $this->assertTrue($process->hasChildById($childProcess->getId()));
+        
         $process->removeChild($childProcess);
+        $this->assertFalse($process->hasChildById($childProcess->getId()));
+    }
+
+    public function testGetInitialChildCountIsZero()
+    {
+        $process = new Process(1234);
+
+        $this->assertSame(0, $process->getChildCount());
     }
 }
