@@ -65,7 +65,7 @@ class ProcessControlServiceTest extends PHPUnit_Framework_TestCase
         $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
         $processService->parallel(function(){ });
 
-        $this->assertTrue($processService->getMaster()->hasChildByProcessId($childPid));
+        $this->assertTrue($processService->getMaster()->hasChildById($childPid));
     }
 
     /**

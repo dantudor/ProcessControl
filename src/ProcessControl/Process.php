@@ -95,7 +95,7 @@ class Process
      */
     public function getChildById($processId)
     {
-        if (false === $this->hasChildByProcessId($processId)) {
+        if (false === $this->hasChildById($processId)) {
             throw new MissingChildException('The child process does not exist');
         }
 
@@ -109,7 +109,7 @@ class Process
      *
      * @return bool
      */
-    public function hasChildByProcessId($processId)
+    public function hasChildById($processId)
     {
         return $this->children->containsKey($processId);
     }
@@ -125,7 +125,7 @@ class Process
      */
     public function removeChild(Process $process)
     {
-        if (false === $this->hasChildByProcessId($process->getId())) {
+        if (false === $this->hasChildById($process->getId())) {
             throw new MissingChildException('The child process does not exist');
         }
 
