@@ -35,7 +35,7 @@ class ProcessControlService
      * @param Posix $posix
      * @param Pcntl $pcntl
      */
-    public function __construct(Posix $posix, Pcntl $pcntl)
+    public function __construct(Posix $posix = null, Pcntl $pcntl = null)
     {
         $this->posix = (is_null($posix)) ? new Posix() : $posix;
         $this->pcntl = (is_null($pcntl)) ? new Pcntl() : $pcntl;
