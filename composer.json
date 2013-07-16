@@ -1,0 +1,26 @@
+{
+    "name": "dantudor/process-control",
+    "type": "library",
+    "description": "Process Control // PCNTL // POSIX",
+    "keywords": ["process", "pcntl", "posix", "fork", "daemon"],
+    "homepage": "http://github.com/dantudor/ProcessControl",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dan Tudor",
+            "email": "dtudor01@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "ProcessControl": "src/" }
+    },
+    "require": {
+        "php": ">=5.3",
+        "dantudor/pcntl": "0.1.*",
+        "dantudor/posix": "0.1.*"
+    },
+    "require-dev": {
+        "dantudor/mockfs": "dev-master",
+        "mockery/mockery": "dev-master@dev"
+    }
+}

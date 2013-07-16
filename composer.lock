@@ -1,0 +1,194 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "91dfd2ef67af293f3787fea516b8a66b",
+    "packages": [
+        {
+            "name": "dantudor/pcntl",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dantudor/Pcntl.git",
+                "reference": "0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dantudor/Pcntl/zipball/0.1",
+                "reference": "0.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Pcntl": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Dan Tudor",
+                    "email": "dtudor01@gmail.com",
+                    "homepage": "http://github.com/dantudor",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Pcntl Wrapper",
+            "keywords": [
+                "pcntl"
+            ],
+            "time": "2013-07-15 17:30:30"
+        },
+        {
+            "name": "dantudor/posix",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dantudor/Posix.git",
+                "reference": "0.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dantudor/Posix/zipball/0.1.1",
+                "reference": "0.1.1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-posix": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Posix": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Dan Tudor",
+                    "email": "dtudor01@gmail.com",
+                    "homepage": "http://github.com/dantudor",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Posix Wrapper",
+            "keywords": [
+                "posix"
+            ],
+            "time": "2013-07-03 15:26:50"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "dantudor/mockfs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dantudor/MockFs.git",
+                "reference": "9196611cbd0c95fdbd5dc3337d64404e1c371eb4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dantudor/MockFs/zipball/9196611cbd0c95fdbd5dc3337d64404e1c371eb4",
+                "reference": "9196611cbd0c95fdbd5dc3337d64404e1c371eb4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "MockFs": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dan Tudor",
+                    "email": "dtudor01@gmail.com",
+                    "homepage": "http://github.com/dantudor",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "http://github.com/dantudor/MockFs",
+            "time": "2013-05-22 09:56:08"
+        },
+        {
+            "name": "mockery/mockery",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/padraic/mockery.git",
+                "reference": "7c53b7a6d1d1538f8180927247c96dd1df900248"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/7c53b7a6d1d1538f8180927247c96dd1df900248",
+                "reference": "7c53b7a6d1d1538f8180927247c96dd1df900248",
+                "shasum": ""
+            },
+            "require": {
+                "lib-pcre": ">=7.0",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "hamcrest/hamcrest": "1.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mockery": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Pádraic Brady",
+                    "email": "padraic.brady@gmail.com",
+                    "homepage": "http://blog.astrumfutura.com"
+                }
+            ],
+            "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succint API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
+            "homepage": "http://github.com/padraic/mockery",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "library",
+                "mock",
+                "mock objects",
+                "mockery",
+                "stub",
+                "test",
+                "test double",
+                "testing"
+            ],
+            "time": "2013-07-10 22:15:03"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "dantudor/mockfs": 20,
+        "mockery/mockery": 20
+    },
+    "platform": {
+        "php": ">=5.3"
+    },
+    "platform-dev": [
+
+    ]
+}
