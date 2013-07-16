@@ -18,7 +18,7 @@
         "php": ">=5.3",
         "dantudor/pcntl": "0.1.*",
         "dantudor/posix": "0.1.*",
-        "phpcollection/phpcollection": ">=0.3"
+        "phpcollection/phpcollection": "0.2"
     },
     "require-dev": {
         "dantudor/mockfs": "dev-master",
