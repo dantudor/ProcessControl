@@ -64,24 +64,64 @@ class ProcessControlService
      */
     public function parallel(Closure $closure)
     {
+        $processId = $this->fork();
+
+        if ($processId) {
+            $process = new Process($processId, $this->master);
+            $this->master->addChild($process);
+
+            return $process;
+        }
+
+        $process = new Process($this->posix->getpid(), $this->master);
+        if (false === is_null($closure)) {
+            call_user_func($closure, $process);
+        }
+        $this->posix->kill($process->getId(), SIGKILL);
+
+        return $this;
+    }
+
+    /**
+     * Daemonize
+     *
+     * @param callable $closure
+     *
+     * @return $this
+     */
+    public function daemonize(Closure $closure = null)
+    {
+        $processId = $this->fork();
+
+        if ($processId) {
+            if (false === is_null($closure)) {
+                $process = new Process($processId, $this->master);
+                call_user_func($closure, $process);
+            }
+            $this->posix->kill($this->master->getId(), SIGKILL);
+            return;
+        }
+
+        $this->posix->setsid(); // Child leads the session
+
+        return new Process($this->posix->getpid());
+    }
+
+    /**
+     * Fork the Process
+     *
+     * @return int
+     * @throws ForkFailureException
+     */
+    protected function fork()
+    {
         $processId = $this->pcntl->fork();
 
         if (-1 === $processId) {
             throw new ForkFailureException('Unable to fork process');
         }
 
-        if ($processId) {
-            $childProcess = new Process($processId, $this->master);
-            $this->master->addChild($childProcess);
-
-            return $childProcess;
-        }
-
-        $childProcess = new Process($this->posix->getpid(), $this->master);
-        call_user_func($closure, $childProcess);
-        $this->posix->kill($childProcess->getId(), 9);
-
-        return $this;
+        return $processId;
     }
 
     /**

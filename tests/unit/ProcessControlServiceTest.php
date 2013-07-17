@@ -78,7 +78,7 @@ class ProcessControlServiceTest extends PHPUnit_Framework_TestCase
         $masterPid = 1234;
         $childPid = 0;
         $closure = function() {
-            throw new RanClosureException('dan');
+            throw new RanClosureException('');
         };
 
         $this->mockPosix->shouldReceive('getpid')->andReturn($masterPid);
@@ -99,6 +99,64 @@ class ProcessControlServiceTest extends PHPUnit_Framework_TestCase
 
         $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
         $processService->parallel(function(){ });
+    }
+
+    /**
+     * @expectedException \ProcessControl\Exception\ForkFailureException
+     */
+    public function testExceptionWhenDaemonizeFailsToFork()
+    {
+        $masterPid = 1234;
+
+        $this->mockPosix->shouldReceive('getpid')->andReturn($masterPid);
+        $this->mockPcntl->shouldReceive('fork')->andReturn(-1);
+
+        $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
+        $processService->daemonize();
+    }
+
+    /**
+     * @expectedException \RanClosureException
+     */
+    public function testDaemonizeCallsTheClosureWhenRespondingToParent()
+    {
+        $masterPid = 1234;
+        $childPid = 5678;
+        $closure = function() {
+            throw new RanClosureException('');
+        };
+
+        $this->mockPosix->shouldReceive('getpid')->andReturn($masterPid);
+        $this->mockPcntl->shouldReceive('fork')->andReturn($childPid);
+
+        $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
+        $processService->daemonize($closure);
+    }
+
+    public function testDaemonizeKillsTheParentProcess()
+    {
+        $masterPid = 1234;
+        $childPid = 5678;
+
+        $this->mockPosix->shouldReceive('getpid')->andReturn($masterPid);
+        $this->mockPcntl->shouldReceive('fork')->andReturn($childPid);
+        $this->mockPosix->shouldReceive('kill')->with($masterPid, SIGKILL);
+
+        $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
+        $processService->daemonize(function(){ });
+    }
+
+    public function testDaemonizeReturnsChildProcessWhenRespondingToChild()
+    {
+        $masterPid = 1234;
+        $childPid = 0;
+
+        $this->mockPosix->shouldReceive('getpid')->andReturn($masterPid);
+        $this->mockPcntl->shouldReceive('fork')->andReturn($childPid);
+        $this->mockPosix->shouldReceive('setsid');
+
+        $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
+        $processService->daemonize();
     }
 
     public function testTerminateProcess()
