@@ -71,15 +71,15 @@ class ProcessControlService
         }
 
         if ($processId) {
-            $process = new Process($processId, $this->master);
-            $this->master->addChild($process);
+            $childProcess = new Process($processId, $this->master);
+            $this->master->addChild($childProcess);
+
+            return $childProcess;
         }
 
-        if (0 === $processId) {
-            $process = new Process($this->posix->getpid(), $this->master);
-            call_user_func($closure, $process);
-            $this->posix->kill($process->getId(), 9);
-        }
+        $childProcess = new Process($this->posix->getpid(), $this->master);
+        call_user_func($closure, $childProcess);
+        $this->posix->kill($childProcess->getId(), 9);
 
         return $this;
     }

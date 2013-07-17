@@ -42,7 +42,7 @@ class ProcessControlServiceTest extends PHPUnit_Framework_TestCase
         $processService->parallel(function(){ });
     }
 
-    public function testParallelReturnsInstanceWhenRespondingToParent()
+    public function testParallelReturnsInstanceOfChildWhenRespondingToParent()
     {
         $masterPid = 1234;
         $childPid = 5678;
@@ -51,7 +51,9 @@ class ProcessControlServiceTest extends PHPUnit_Framework_TestCase
         $this->mockPcntl->shouldReceive('fork')->andReturn($childPid);
 
         $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
-        $this->assertSame($processService, $processService->parallel(function(){ }));
+        $childProcess = $processService->parallel(function(){ });
+        $this->assertInstanceOf('\ProcessControl\Process', $childProcess);
+        $this->assertSame($childPid, $childProcess->getId());
     }
 
     public function testParallelAddsChildToMasterWhenRespondingToParent()
@@ -110,6 +112,7 @@ class ProcessControlServiceTest extends PHPUnit_Framework_TestCase
 
         $processService = new ProcessControlService($this->mockPosix, $this->mockPcntl);
         $processService->parallel(function(){sleep(10);});
+
 
         $childProcess = $processService->getMaster()->getChildById($childPid);
 

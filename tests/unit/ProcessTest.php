@@ -80,7 +80,7 @@ class ProcessTest extends PHPUnit_Framework_TestCase
 
         $process->addChild($childProcess);
         $this->assertTrue($process->hasChildById($childProcess->getId()));
-        
+
         $process->removeChild($childProcess);
         $this->assertFalse($process->hasChildById($childProcess->getId()));
     }
