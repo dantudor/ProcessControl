@@ -74,10 +74,11 @@ class ProcessControlService
         }
 
         $process = new Process($this->posix->getpid(), $this->master);
+        $this->master->addChild($process);
         if (false === is_null($closure)) {
             call_user_func($closure, $process);
         }
-        $this->posix->kill($process->getId(), SIGKILL);
+        $this->terminateProcess($process);
 
         return $this;
     }
@@ -98,8 +99,8 @@ class ProcessControlService
                 $process = new Process($processId, $this->master);
                 call_user_func($closure, $process);
             }
-            $this->posix->kill($this->master->getId(), SIGKILL);
-            return;
+
+            return $this->terminateProcess($this->master);
         }
 
         $this->posix->setsid(); // Child leads the session
@@ -137,7 +138,9 @@ class ProcessControlService
     public function terminateProcess(Process $process, $signal = SIGKILL)
     {
         $this->posix->kill($process->getId(), $signal);
-        $this->getMaster()->removeChild($process);
+        if (false === $process->isMaster()) {
+            $this->getMaster()->removeChild($process);
+        }
 
         return $this;
     }
