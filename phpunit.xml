@@ -7,7 +7,6 @@
         convertWarningsToExceptions="false">
     <testsuite name="Unit Tests">
         <directory>./tests/unit/</directory>
-        <exclude></exclude>
     </testsuite>
     <filter>
         <whitelist>
